@@ -1,2 +1,3 @@
 # Jogos em Pascal
-Exercícios em pascal com tematica gamer realizados no primeiro período de ADS na cadeira de Programação Estruturada.
+Exercícios em pascal com temática gamer realizados no primeiro
+períodode ADS na cadeira de Programação Estruturada.
