@@ -1,3 +1,7 @@
+
+///------------------------------------------------------///
+///     Author: Wensttay de Sousa Alencar     ///
+///------------------------------------------------------///
 Program questao4;
 
 Uses crt;
@@ -11,14 +15,14 @@ Const
 
 Type
 	matriz = array[1..Linhas_Reais,1..Colunas_Reais] of char;
-	matrizInt = array[1..Linhas_Reais,1..Colunas_Reais] of integer; 
-                              
+	matrizInt = array[1..Linhas_Reais,1..Colunas_Reais] of integer;
+
 Var
 	iniciar: char;
 	Estrutura: matriz;
 	Bomba: matrizInt;
-	CorX, CorY, X, Y:integer; 
-	Open, Pontuacao, Aux:integer;   
+	CorX, CorY, X, Y:integer;
+	Open, Pontuacao, Aux:integer;
 	GameOver,continua,Vencedor: Boolean;
 	Reiniciar:char;
 	EspasoVazio:integer;
@@ -33,7 +37,7 @@ Procedure TITULO;
 		gotoxy(2,4); textcolor(12); write('//////////////////////////////////////////////////////////////////////////////');
 	End;
 
-///-------------------------------------------------///          
+///-------------------------------------------------///
 /// SUBPROGRAMA QUE IMPRIME O PRIMEIRO MENU DO JOGO ///
 ///-------------------------------------------------///
 Procedure  PrimeiroMenu(var iniciar:char);
@@ -45,7 +49,7 @@ Procedure  PrimeiroMenu(var iniciar:char);
 				gotoxy(PosX,PosY); textcolor(15); write('        PARA INICIAR O JOGO DIGITE '); textcolor(12);  write('1'); textcolor(15); write(': ');
 				gotoxy(PosX,PosY+3); textcolor(15); write('        PARA LER O TUTORIAL DIGITE '); textcolor(12); write('2'); textcolor(15); write(': ');
 				gotoxy(PosX+39,PosY+2); readln(iniciar);
-				
+
 				if iniciar = '2' then
 					Begin
 						clrscr;
@@ -56,7 +60,7 @@ Procedure  PrimeiroMenu(var iniciar:char);
 						gotoxy(5,11); textcolor(12); write('Como jogar?');
 						gotoxy(5,13); textcolor(15); write('Escolha uma coordenada de uma linha e de uma coluna e arisque sua vida!');
 						gotoxy(5,14); write('Quanto mais casas voce abrir sem "pisar" na mina, maior sera sua pontuacao.');
-						gotoxy(5,15); write('Quanto MAIOR for o numero de minas ao redor da casa escolhida, maior '); 
+						gotoxy(5,15); write('Quanto MAIOR for o numero de minas ao redor da casa escolhida, maior ');
 						gotoxy(5,16); write('ser  o BONUS de pontos!');
 						gotoxy(5,18); textcolor(12); write('Quando Termina o Jogo?');
 						gotoxy(5,20); textcolor(15); write('Quando o jogador abrir uma coordenada com uma mina ou quando todas');
@@ -64,13 +68,13 @@ Procedure  PrimeiroMenu(var iniciar:char);
 						gotoxy(5,23); textcolor(12); write('Precione qualquer tecla para retornar ao menu anterior: ');
 						readln; KeyPressed;
 					End;
-				
+
 				if (iniciar <> '1') and (iniciar <> '2') then
 					Begin
 						clrscr;
 						PrimeiroMenu(iniciar);
 					End;
-			Until iniciar = '1'; 
+			Until iniciar = '1';
 		End;
 	End;
 
@@ -80,15 +84,15 @@ Procedure  PrimeiroMenu(var iniciar:char);
 Procedure ResetMatriz(Linhas_Reais,Colunas_Reais:integer; var Estrutura:matriz; var Bomba:matrizInt);
 Var
 	L,C: Integer;
-	
-	Begin                
+
+	Begin
 		for L:= 1 to Linhas_Reais do
 			for C:= 1 to Colunas_Reais do
 				Begin
 					Estrutura[L][C] := chr(254);
 					Bomba[L][C] := 0;
 				End;
-	End;                                                          
+	End;
 
 ///------------------------------------------///
 /// SUBPROGRAMA QUE IMPRIME O CAMPO DE MINAS ///
@@ -96,23 +100,23 @@ Var
 Procedure TABELA (Linhas_Reais,Colunas_Reais:integer; var Estrutura:matriz);
 Var
 	Pos,L,C,Alfa:integer;
-	
+
 	Begin
 		Pos := 7;
 		gotoxy(10,Pos-1);
-			
+
 		for L:= 1 to Colunas_Reais do
 			Begin
 				textbackground(Black);
 				textcolor(12);
 				write(' ',L);
 			End;
-		writeln;     	
+		writeln;
 
-		for L:= 1 to Linhas_Reais do 
+		for L:= 1 to Linhas_Reais do
 			Begin
-				gotoxy(8,Pos);	
-				
+				gotoxy(8,Pos);
+
 				if L < 10 then
 					Begin
 						textbackground(Black);
@@ -125,7 +129,7 @@ Var
 						textcolor(White);
 						write(L);
 					End;
-				
+
 				for C:= 1 to Colunas_Reais do
 					Begin
 						if Estrutura[L][C] = chr(254) then       /// QUANDO AINDA N TIVER ESCOLHIDO ///
@@ -147,20 +151,20 @@ Var
 								textbackground(white);
 								textcolor(Black);
 								write(Estrutura[L][C]);
-							End;                            
+							End;
 					End;
-					
-				textbackground(0);        
+
+				textbackground(0);
 				write(' ');
 				textbackground(Black);
 				textcolor(white);
 				write(L,' ');
 				writeln;
-				Pos := Pos + 1;       
+				Pos := Pos + 1;
 			End;
-			
-		gotoxy(10,Pos);                          
-		
+
+		gotoxy(10,Pos);
+
 		for L:= 1 to Colunas_Reais do
 			if L < 11 then
 				Begin
@@ -174,12 +178,12 @@ Var
 					textcolor(12);
 					write(L:2);
 				End;
-				
+
 		textcolor(white);
 		textbackground(black);
 	End;
-	
-///---------------------------------------------///	
+
+///---------------------------------------------///
 /// SUBPROGRAMA QUE SORTEIA OS LOCAIS DAS MINAS ///
 ///---------------------------------------------///
 Procedure Random_Bombas (var Bomba:matrizInt);    /// Sorteando Bombas ///
@@ -188,20 +192,20 @@ Var
 
 	Begin
 		X := 0;
-		Y := 0; 
+		Y := 0;
 		cont := 0;
-     
+
 		repeat
 			randomize;
 			X := random(Linhas_Reais)+1;
 			Y := random(Colunas_Reais)+1;
-           
+
 			if Bomba[X][Y] = 0 then
 				Begin
 					Bomba[X][Y] := 1;
 					cont := cont +1;
 				End;
-              
+
 		Until cont = Numero_de_Bombas;
 	End;
 
@@ -225,7 +229,7 @@ Procedure ShowEstruturaColunas (CorX,CorY:integer);
 		gotoxy(CorX,CorY+6); write(chr(201),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(187));
 		gotoxy(CorX,CorY+7); write(chr(186)); write('          ',chr(186));
 		gotoxy(CorX,CorY+8); write(chr(200),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(188));
-	End; 
+	End;
 
 ///----------------------------------------------///
 /// SUBPROGRAMA QUE MOSTRA O PLACAR DA PONTUACAO ///
@@ -237,7 +241,7 @@ Procedure ShowEstruturaPontos (CorX,CorY:integer; Pontuacao:integer);
 		gotoxy(CorX+16,CorY+7); write(chr(186)); gotoxy(CorX+21,CorY+7); write(Pontuacao); gotoxy(CorX+27,CorY+7); write(chr(186));
 		gotoxy(CorX+16,CorY+8); write(chr(200),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(205),chr(188));
 	End;
-	
+
 ///---------------------------------------------------------------///
 /// SUBPROGRAMA QUE DEFINE A SOMA DE APROXIMACAO AA MINAS DO JOGO ///
 ///---------------------------------------------------------------///
@@ -254,7 +258,7 @@ Procedure SomaMina (var Bomba:matrizInt; var Estrutura:matriz; var GameOver:Bool
 			Aux := (Bomba[X][Y-1] + Bomba[X+1][Y-1] + Bomba[X+1][Y])
 		Else if (X = Colunas_Reais) and (Y = Linhas_Reais) then
 			Aux := (Bomba[X-1][Y] + Bomba[X-1][Y-1] + Bomba[X][Y-1])
-		Else if (X = Colunas_Reais) and (Y = 1) then                            
+		Else if (X = Colunas_Reais) and (Y = 1) then
 			Aux := (Bomba[X-1][Y] + Bomba[X-1][Y+1] + Bomba[X][Y+1])
 		Else if (Y = 1) then
 			Aux := (Bomba[X-1][Y] + Bomba[X-1][Y+1] + Bomba[X][Y+1] + Bomba[X+1][Y+1] + Bomba[X+1][Y])
@@ -294,7 +298,7 @@ Var
 	condi:char;
 
 	Begin
-		condi := 'o';   
+		condi := 'o';
         gotoxy(10,20);write('Deseja jogar Novamente ?(s/n) ');
         readln(condi);
         case condi of
@@ -315,8 +319,8 @@ Var
 	Begin
 		for L:= 1 to Linhas_Reais do
             for C:= 1 to Colunas_Reais do
-				Estrutura[L][C] := chr(254);   
-        
+				Estrutura[L][C] := chr(254);
+
         for L:= 1 to Linhas_Reais do
 			for C:= 1 to Colunas_Reais do
 				if Bomba[L][C] = 1 then
@@ -327,7 +331,7 @@ Var
 
 ///--------------------///
 /// PROGRAMA PRINCIPAL ///
-///--------------------///                        
+///--------------------///
 Begin
 	Repeat
 		PrimeiroMenu(iniciar);
@@ -345,8 +349,8 @@ Begin
 		ShowEstruturaColunas (CorX,CorY);
 		Open := 0;
 		Pontuacao :=0;
-     
-///---------------------///     
+
+///---------------------///
 /// INICIA TELA DE JOGO ///
 ///---------------------///
 		Repeat
@@ -356,37 +360,37 @@ Begin
 			gotoxy(CorX+5,CorY+7); write('    ');
 			gotoxy(CorX+5,CorY+2); read(X);
 			gotoxy(CorX+5,CorY+7); read(Y);
-     
+
 			Vencedor := False;
 			Continua := False;
 			GameOver := False;
-     
+
 			If Estrutura[X][Y] = chr(254) then
 				continua := True;
-     
+
 			if (continua) then
 				Begin
 					SomaMina (Bomba,Estrutura,GameOver,Aux);
 					Transform (Aux,Estrutura);
-					Pontuacao := Pontuacao + 5 + Aux; 
-					Open := Open +1;  
-				End;  
-                   
+					Pontuacao := Pontuacao + 5 + Aux;
+					Open := Open +1;
+				End;
+
 		Until (GameOver) or (Open =  EspasoVazio);
-       
-		if Open =  EspasoVazio then   
+
+		if Open =  EspasoVazio then
 			Begin
 				gotoxy(45,17); write('PARABENS ! VOCE GANHOU');
 			End
-		Else 
+		Else
 			Begin
 				gotoxy(45,17); textcolor(12); write(' GAME OVER !!')
 			End;
-			
+
 		CampoRevelado (Linhas_Reais,Colunas_Reais,Estrutura);
 		TABELA(Linhas_Reais,Colunas_Reais,Estrutura);
 		Reini(Reiniciar);
 
-	Until  (Reiniciar = 'n');       
+	Until  (Reiniciar = 'n');
 
 End.
